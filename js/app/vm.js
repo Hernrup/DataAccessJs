@@ -1,22 +1,35 @@
-define(['knockout'], function(ko) {
+define(['knockout','LDJ/view','LDJ/filter','LDJ/query'], function(ko,view,filter,query) {
     return function vm() {
         
-        var self = this;
+        var self = this
 
-        self.getMyData = function(){
-        	alert("Yeah");
-        	console.log("Im a view model click!");
-			// var view = new view();
-			// view.add('idcompany','asc',1) //sortorder, sortindex
-			// view.add('responsible.name') //sortorder, sortindex
+        self.getData = function(){
+        	
+        	console.log("FetchData")
 
-			// var filter = new filter();
-			// filter.add('field','city','=','string','lund') //type,val,operator,type,val
+			var qView = new view()
+			qView.add('idrace')
+			qView.add('name','asc',1)
+			qView.add('length')
+			qView.add('startdate')
+			qView.add('enddate')
 
-			// var query = new Query('company',view,filter);
+			var qFilter = new filter()
+			qFilter.add('field','startdate','>','string','2014-01-01')
 
-			// query.send(successCallback,failureCallback);
+			var qQuery = new query('company', 0, qView, qFilter)
+			//console.log(qQuery.toXml())
 
+			qQuery.send(self.successCallback,self.failureCallback)
+
+		}
+
+		self.successCallback = function(data){
+			console.log('success');
+			console.log(data);
+		}
+		self.failureCallback = function(){
+			console.log('failure');
 		}
     };
 });

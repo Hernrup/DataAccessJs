@@ -1,24 +1,20 @@
 requirejs.config({
-    //By default load any module IDs from js/lib
+  
     baseUrl: 'js/lib',
-    //except, if the module ID starts with "app",
-    //load it from the js/app directory. paths
-    //config is relative to the baseUrl, and
-    //never includes a ".js" extension since
-    //the paths config could be for a directory.
+
     paths: {
         'app': '../app',
-        'knockout':'knockout-3.0.0'
+        'knockout':'knockout-3.0.0',
+        'jquery': 'jquery-2.1.0.min'
     },
+
+    urlArgs: "v=" +  (new Date()).getTime(),
+
 });
 
-// // Start the main app logic.
-// requirejs(['knockout-3.0.0.js','app/example'],function(ko,example) {
-    
-// });
 
-require(['knockout', 'app/vm', 'domReady!'], function(ko, vm) {
-    //console.log("Startup");
-    console.log(vm);
-    ko.applyBindings(new vm());
+require(['knockout', 'app/application', 'domReady'], function(ko, appl, domReady) {
+    console.log("Startup");
+    appl.init();
+    
 });
